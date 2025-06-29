@@ -73,7 +73,7 @@ const SignUpPage = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
       {/* Left Side - Image */}
-      <div className="hidden md:block bg-gray-700">
+      <div className=" flex relative items-center justify-center md:block  h-full bg-purple-950">
         <img
           src="https://static.vecteezy.com/system/resources/previews/002/071/017/non_2x/abstract-background-3d-purple-yellow-white-geometric-squares-shape-design-paper-cut-style-vector.jpg" // 🔁 Replace with actual path
           alt="Sign up visual"
@@ -82,12 +82,12 @@ const SignUpPage = () => {
       </div>
 
       {/* Right Side - Form */}
-      <div className="w-full h-full flex flex-col items-center justify-center bg-blue-950">
-        <div className="w-[90%] md:w-[75%] bg-amber-50 px-10 py-8 rounded-lg shadow-md">
-          <h1 className="text-3xl font-semibold mb-4">Create an account</h1>
-          <p className="mb-6 text-gray-700">
+      <div className="w-full h-full text flex flex-col items-center justify-center bg-purple-950">
+        <div className="w-[90%] md:w-[75%] bg-purple-950 px-10 py-8 rounded-lg shadow-md">
+          <h1 className="text-6xl text-yellow-400 font-semibold mb-4">Create an account</h1>
+          <p className="mb-6 text-gray-300">
             Already have an account?{" "}
-            <Link to="/login" className="text-purple-600 hover:underline">
+            <Link to="/login" className="text-yellow-300 hover:underline">
               Log in
             </Link>
           </p>
@@ -99,7 +99,7 @@ const SignUpPage = () => {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md  bg-purple-200 focus:outline-none"
               required
             />
             <input
@@ -108,7 +108,7 @@ const SignUpPage = () => {
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md  bg-purple-200 focus:outline-none"
               required
             />
             <input
@@ -117,7 +117,7 @@ const SignUpPage = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md  bg-purple-200 focus:outline-none"
               required
             />
             <div className="relative ">
@@ -127,7 +127,7 @@ const SignUpPage = () => {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none pr-10"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md  bg-purple-200 focus:outline-none"
                 required
               />
 
@@ -145,7 +145,7 @@ const SignUpPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+              className="w-full py-2  text-white rounded-md bg-yellow-500 transition-colors"
             >
               {!isSigningUp ? "Register" : "Registering user ..."}
             </button>

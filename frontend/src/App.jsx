@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes ,Navigate} from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar/Navbar.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -30,7 +30,7 @@ const App = () => {
     );
   }
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-Varela">
       
       {authUser && <Navbar />}
       <Routes>
