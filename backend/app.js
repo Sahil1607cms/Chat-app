@@ -19,5 +19,5 @@ app.use(cookieParser())
 
 import authRouter from "./src/routes/auth.route.js"
 
-app.use("/api/user",authRouter)
+app.use("/api/auth",authRouter)
 export default app
