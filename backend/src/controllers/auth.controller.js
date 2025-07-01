@@ -24,21 +24,10 @@ const registerUser = asyncHandler(async (req, res) => {
   //validate unique user
   //get the token and profilePic link
 
-  console.log("Received registration request body:", req.body);
-  console.log("Request headers:", req.headers);
-
   const { username, fullName, email, password} = req.body;
-  
-  console.log("Extracted fields:", { username, fullName, email, password: password ? "***" : "undefined" });
   
   // Check if any required field is missing or empty
   if (!username || !fullName || !email || !password) {
-    console.log("Missing fields detected:", { 
-      username: !!username, 
-      fullName: !!fullName, 
-      email: !!email, 
-      password: !!password 
-    });
     throw new ApiError(400, "All fields are required");
   }
   
@@ -67,8 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     fullName,
     email,
-    password,
-    profilePic
+    password
   });
 
   const createdUser = await User.findById(user._id).select(
@@ -207,7 +195,7 @@ const updateProfile = asyncHandler(async (req, res) => {
   const { profilePic } = req.body;
 
   if (!profilePic) {
-    throw new ApiError(401, "Profile pic is required");
+    throw new ApiError(401, "Profile picture is required");
   }
 
   const user = await User.findByIdAndUpdate(
@@ -217,7 +205,7 @@ const updateProfile = asyncHandler(async (req, res) => {
   );
 
   if (!user) {
-    throw new ApiError(401, "Profile pic is required");
+    throw new ApiError(401, "Something went wrong while uploading file");
   }
 
   res
