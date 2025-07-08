@@ -11,5 +11,8 @@ export default {
       }
     },
   },
-  plugins: [],
-} 
+  plugins:['daisyui'],
+  daisyui:{
+    themes:["light","dark","synthwave","halloween","cupcake"]
+  }
+}

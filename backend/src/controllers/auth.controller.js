@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/asynchandler.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import jwt from "jsonwebtoken"
+import {cloudinary} from "../utils/cloudinary.js"
+
 const generateAccessAndRefreshToken = async (userID) => {
   try {
     const user = await User.findById(userID);
@@ -114,6 +116,8 @@ const loginUser = asyncHandler(async (req, res) => {
     .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(200, { loggedInUser }, "Login successfull"));
 });
+
+
 const logoutUser = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.user?._id,
@@ -132,7 +136,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV !== "development",
   };
 
   return res
@@ -171,7 +175,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly:true,
-    secure:true
+    secure:process.env.NODE_ENV !== "development",
   }
   return res
     .status(200)
@@ -197,12 +201,22 @@ const updateProfile = asyncHandler(async (req, res) => {
   if (!profilePic) {
     throw new ApiError(401, "Profile picture is required");
   }
-
+  let uploadedPicUrl 
+  try {
+    const uploadedPic = await cloudinary.uploader.upload(profilePic, {
+      folder: "user-profiles",  // optional: organizes uploads in Cloudinary
+      resource_type: "auto",     // handles base64 or URL (image/video)
+    })
+    uploadedPicUrl = uploadedPic.secure_url; 
+  } catch (error) {
+    throw new ApiError(500, "Failed to upload image to Cloudinary");
+  }
+  console.log(uploadedPicUrl)
   const user = await User.findByIdAndUpdate(
     req.user?._id,
-    { profilePic: profilePic },
+    { profilePic: uploadedPicUrl },
     { new: true }
-  );
+  ).select("-password -refreshToken");
 
   if (!user) {
     throw new ApiError(401, "Something went wrong while uploading file");
@@ -218,7 +232,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(404, "User not found ");
   }
-
+  console.log("Got current user")
   res
     .status(200)
     .json(new ApiResponse(200, user, "Current user fetched successfully"));

@@ -53,17 +53,8 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
-      {/* Left Side - Image */}
-      {/* <div className="flex relative items-center justify-center md:block h-full">
-        <img
-          src="https://static.vecteezy.com/system/resources/previews/002/071/017/non_2x/abstract-background-3d-purple-yellow-white-geometric-squares-shape-design-paper-cut-style-vector.jpg"
-          alt="Sign up visual"
-          className="w-[98%] h-[98%] object-cover absolute left-[10px] top-[10px] rounded-3xl"
-        />
-      </div> */}
-
-      {/* Right Side - Form */}
-      <div className="w-full max-w-lg h-auto rounded-lg py-8 flex flex-col items-center border-2 justify-center bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
+      
+      <div className="w-full max-w-lg h-auto rounded-lg py-8 flex flex-col items-center border-1 justify-center bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
         <div className="w-[90%] md:w-[75%] px-6 py-8 rounded-lg shadow-lg">
           <h1 className="text-5xl text-yellow-300 font-semibold mb-4">  
             Welcome, Please Login to continue

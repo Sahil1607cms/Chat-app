@@ -31,7 +31,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div onClick={logout} className="flex items-center cursor-pointer">
-         <Link to="/" className="flex items-center justify-center"> <LogOutIcon />  </Link>
+         <Link to="/" className="flex items-center justify-center"> <LogOutIcon /> Logout </Link>
         </div>
       </div>
       {menuOpen && (

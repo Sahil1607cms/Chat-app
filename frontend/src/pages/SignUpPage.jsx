@@ -73,7 +73,7 @@ const SignUpPage = () => {
       </div> */}
 
       {/* Right Side - Form */} 
-      <div className="w-full max-w-lg h-auto rounded-lg py-8 flex flex-col items-center justify-center border-2 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
+      <div className="w-full max-w-lg h-auto rounded-lg py-8 flex flex-col items-center justify-center border-1 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
         <div className="w-[90%] md:w-[75%] px-10 py-8 rounded-lg shadow-md text-white">
           <h1 className="text-5xl md:text-6xl text-yellow-400 font-semibold mb-4">
             Create an account

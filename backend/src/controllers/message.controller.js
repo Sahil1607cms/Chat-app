@@ -33,7 +33,7 @@ const getSidebarUsers = asyncHandler(async (req, res) => {
 
 const getMessages = asyncHandler(async (req, res) => {
   //get receivers and loggein user(my) id
-  const { id: receiverID } = req.params;
+  const receiverID = req.params.id;
   const myID = req.user?._id;
 
   if (!receiverID) {
@@ -57,7 +57,7 @@ const getMessages = asyncHandler(async (req, res) => {
     ],
   });
   if (!messages) {
-    throw new ApiError(400, "Messages not found");
+    throw new ApiError(400, "No messages");
   }
 
   //send the fetched messages as response json 
@@ -99,6 +99,8 @@ const sendMessages = asyncHandler(async (req, res) => {
   await message.save()
 
   //todo : socket io work needs to be doner
+
+  
   res.status(201).json(new ApiResponse(201,{message},"Message stored and sent successfully"))
 });
 export { getSidebarUsers, getMessages, sendMessages };
