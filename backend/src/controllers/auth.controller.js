@@ -67,9 +67,19 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!createdUser) {
     throw new ApiError(500, "Registering user failed ");
   }
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+    user._id
+  );
+
+  const options = {
+    httpOnly: true, //prevent xss attack
+    secure: process.env.NODE_ENV !== "development", //http vs https localhost and production issue fix
+  };
 
   res
     .status(201)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(201, createdUser, "User successfully registered"));
 });
 
@@ -232,7 +242,6 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(404, "User not found ");
   }
-  console.log("Got current user")
   res
     .status(200)
     .json(new ApiResponse(200, user, "Current user fetched successfully"));
