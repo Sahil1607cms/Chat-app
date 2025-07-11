@@ -7,3 +7,12 @@ body {
   @apply font-sans;
 }
 
+.full-bg {
+  background-image: url('../public/chatBackground.png');
+  background-size:cover;
+  background-position: center;
+  width: 100%;
+  height: calc(100vh - 72px);
+  border-radius: 1rem;
+  background-repeat: no-repeat;
+}

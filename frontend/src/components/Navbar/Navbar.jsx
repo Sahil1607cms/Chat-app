@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full flex items-center relative justify-between h-14 bg-gray-800">
-      <div className="logo text-white font-bold text-2xl pl-3 cursor-pointer">
+      <div className="logo text-white font-bold text-2xl pl-6 cursor-pointer">
         <Link to="/">ChatterBox </Link>
       </div>
         <div className="lg:hidden flex items-center justify-center mr-2 size-10" onClick={()=>setMenuOpen(!menuOpen)}>

@@ -18,7 +18,10 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 import authRouter from "./src/routes/auth.route.js";
+import messageRouter from "./src/routes/message.route.js";
+
 app.use("/api/auth", authRouter);
+app.use("/api/messages", messageRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

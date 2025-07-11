@@ -13,7 +13,7 @@ export const useAuthStore = create(
       isLoggingIn: false,
       isUpdatingProfile: false,
       isHydrated: false,
-
+      onlineUsers:[],
       
       checkAuth: async () => {
         console.log("Checking auth....");

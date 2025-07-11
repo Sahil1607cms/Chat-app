@@ -12,3 +12,4 @@ router.route("/send/:id").get(verifyJWT,sendMessages)
 router.route("/sender/:id").get(verifyJWT,getSidebarUsers)
 
 
+export default router

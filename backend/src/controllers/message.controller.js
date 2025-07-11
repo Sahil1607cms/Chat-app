@@ -20,6 +20,7 @@ const getSidebarUsers = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Users not found");
   }
   //send the filtered users as a json response
+    
   res
     .status(200)
     .json(
