@@ -57,6 +57,7 @@ export const useAuthStore = create(
             error.response?.data?.message || error.message || "Signup failed";
           toast.error(errorMessage);
         } finally {
+          localStorage.removeItem("selectedUser")
           set({ isSigningUp: false });
         }
       },
@@ -86,6 +87,7 @@ export const useAuthStore = create(
           console.log("Error while logging out:", error);
           toast.error(error.response.data.message);
         } finally {
+          localStorage.removeItem("selectedUser")
           set({ isLoggingIn: false });
         }
       },

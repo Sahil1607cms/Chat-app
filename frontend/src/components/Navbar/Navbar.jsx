@@ -10,7 +10,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="w-full flex items-center relative justify-between h-14 bg-gray-800">
+    <div className="w-full flex items-center relative justify-between h-10 bg-gray-800">
       <div className="logo text-white font-bold text-2xl pl-6 cursor-pointer">
         <Link to="/">ChatterBox </Link>
       </div>

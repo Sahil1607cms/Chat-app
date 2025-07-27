@@ -8,7 +8,7 @@ const router = Router()
 router.route("/users").get(verifyJWT,getSidebarUsers)
 router.route("/:id").get(verifyJWT,getMessages)
 
-router.route("/send/:id").get(verifyJWT,sendMessages)
+router.route("/send/:id").post(verifyJWT,sendMessages)
 router.route("/sender/:id").get(verifyJWT,getSidebarUsers)
 
 

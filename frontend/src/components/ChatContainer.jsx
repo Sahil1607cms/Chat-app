@@ -1,7 +1,11 @@
-import {React, useState} from "react";
+import { React, useEffect, useRef } from "react";
 import { useMessageStore } from "../store/useMessageStore";
-import { Cross, X } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
+import { ArrowDown} from "lucide-react";
+import LoadingMessages from "./LoadingMessages";
+import Input from "../components/Input.jsx";
+import ChatHeader from "./ChatHeader.jsx";
+import { formatTime } from "../lib/utils.js";
 
 const ChatContainer = () => {
   const {
@@ -12,40 +16,77 @@ const ChatContainer = () => {
     unsetSelectedUser,
     isImageOpen,
     setImageOpen,
-    unsetImageOpen
+    unsetImageOpen,
   } = useMessageStore();
- 
+
+  const bottomScroll = useRef(null);
+  const { authUser } = useAuthStore();
+  console.log(messages);
+
+  //fetch the messages between sender and user
+  useEffect(() => {
+    if (selectedUser?._id) {
+      getMessages(selectedUser._id);
+    }
+  }, [selectedUser, getMessages]);
+  useEffect(() => {
+  if (bottomScroll.current) {
+    bottomScroll.current.scrollIntoView({ behavior: "smooth" });
+  }
+}, [messages]);
+
+
+  if (isMessagesLoading) return <LoadingMessages />;
 
   return (
-    <div className={`bg-gray-800 w-full h-[calc(100vh-72px)] relative rounded-2xl full-bg `}>
+    // full chat container div from top to bottom
+    <div className="bg-gray-800 w-full  h-[calc(100vh-72px)] full-bg rounded-2xl overflow-hidden flex flex-col">
+      {/* HEADER */}
+      <ChatHeader />
 
-      {/* header */}
-      <div className="flex justify-between bg-gray-900 rounded-t-2xl px-5 py-4 items-center">
-        <div className="flex items-center gap-3 font-bold text-xl">
-          <img
-            src={selectedUser?.profilePic || "./user.png"}
-            alt="user"
-            className="size-9 rounded-full bg-gray-400 object-cover"
-            onClick={() => setImageOpen()}
-          />
-          <p>{selectedUser?.fullName}</p>
-        </div>
-        <X className="w-6 h-6" onClick={() => unsetSelectedUser()} />
-      </div>
-
-      {/* big image container  */}
-      {
-        isImageOpen && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  ">
-            <img
-            src={selectedUser?.profilePic || "./user.png"}
-            alt="user"
-            className="size-100 rounded-lg  bg-gray-400 object-cover"
-          />
-          <X className="absolute -top-5 -right-5 bg-gray-600 rounded-full size-10" onClick={() => unsetImageOpen()}/>
+      <div className="flex-1 flex flex-col overflow-y-auto gap-5  p-4">
+        {messages.map((message) => (
+          <div
+            key={message._id}
+            className={`chat ${
+              message.senderID === authUser._id ? "chat-end" : "chat-start"
+            }`}
+          >
+            <div className="chat-image avatar">
+              <div className="size-10 rounded-full border">
+                <img
+                  src={
+                    message.senderID === authUser._id
+                      ? authUser.profilePic || "./user.png"
+                      : selectedUser.profilePic || "./user.png"
+                  }
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="chat-bubble flex flex-col my-1 bg-gray-600">
+              {message.image && (
+                <img
+                  src={message.image}
+                  alt="attachment"
+                  className="w-[200px] rounded-lg "
+                />
+              )}
+              {message.text && <p className="text-sm mt-2 ">{message.text}</p>}
+            </div>
+            <div className="chat-footer">
+              <time>{formatTime(message.createdAt)}</time>
+            </div>
           </div>
-        )
-      }
+        ))}
+        <div ref={bottomScroll} />
+      </div>
+      <span>
+        <ArrowDown className="bg-white p-1 ml-2 rounded-full text-black size-7 cursor-pointer"
+        onClick={()=> bottomScroll.current?.scrollIntoView({behavior: "smooth"})}
+      />
+      </span>
+      <Input/>
     </div>
   );
 };

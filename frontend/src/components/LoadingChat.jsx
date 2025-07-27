@@ -6,16 +6,17 @@ const LoadingChat = () => {
 
   return (
     <aside
-      className="h-full w-full max-w-md bg-gray-700 rounded-2xl
+      className="h-full w-full max-w-md bg-gray-800 rounded-2xl
     flex flex-col "
     >
       {/* Header */}
-      <div className="border-b border-base-300 w-full p-5">
-        <div className="flex items-center gap-2">
-          <Users className="w-6 h-6" />
-          <span className="font-medium">Contacts</span>
-        </div>
-      </div>
+            <div className="border-b bg-gray-900 border-base-300 rounded-t-2xl text-xl w-full p-5">
+              {/* header */}
+              <div className="flex items-center gap-2">
+                <Users className="w-6 h-6" />
+                <span className="font-medium">Contacts</span>
+              </div>
+            </div>
 
       {/* Skeleton Contacts */}
       <div className="overflow-y-auto w-full py-3">

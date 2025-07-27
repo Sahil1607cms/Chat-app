@@ -35,12 +35,12 @@ const getSidebarUsers = asyncHandler(async (req, res) => {
 const getMessages = asyncHandler(async (req, res) => {
   //get receivers and loggein user(my) id
   const receiverID = req.params.id;
-  const myID = req.user?._id;
+  const senderID = req.user?._id;
 
   if (!receiverID) {
     throw new ApiError(400, "Receiver not found");
   }
-  if (!myID) {
+  if (!senderID) {
     throw new ApiError(400, "Sender not found");
   }
 
@@ -48,12 +48,12 @@ const getMessages = asyncHandler(async (req, res) => {
   const messages = await Message.find({
     $or: [
       {
-        senderID: myID,
+        senderID: senderID,
         receiverID: receiverID,
       },
       {
         senderID: receiverID,
-        receiverID: myID,
+        receiverID: senderID,
       },
     ],
   });
@@ -70,13 +70,13 @@ const getMessages = asyncHandler(async (req, res) => {
 const sendMessages = asyncHandler(async (req, res) => {
   //get sender and receiver user id 
   const { id: receiverID } = req.params;
-  const myID = req.user?._id;
+  const senderID = req.user?._id;
   //get image and text from body 
   const { text, image } = req.body;
   if (!receiverID) {
     throw new ApiError(400, "Receiver not found");
   }
-  if (!myID) {
+  if (!senderID) {
     throw new ApiError(400, "Sender not found");
   }
 

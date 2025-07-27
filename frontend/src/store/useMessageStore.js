@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 export const useMessageStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       messages: [],
       users: [],
       selectedUser: null,
@@ -30,10 +30,31 @@ export const useMessageStore = create(
         set({ isMessagesLoading: true });
         try {
           const res = await axiosInstance.get(`messages/${userID}`);
-          set({ messages: res.data.messages });
+          set({ messages: res.data.data.messages });
         } catch (error) {
-          console.log(error.response.data.message);
+          console.log('getMessages error:',error);
           toast.error(error.response.data.message);
+        } finally {
+          set({ isMessagesLoading: false });
+        }
+      },
+
+      sendMessages: async (messageData) => {
+        const { selectedUser, messages } = get();
+        try {
+          const res = await axiosInstance.post(
+            `messages/send/${selectedUser._id}`,
+            messageData
+          );
+          console.log(res.data.data.message)
+          // Ensure messages is an array before spreading
+          const currentMessages = Array.isArray(messages) ? messages : [];
+          set({ messages: [...currentMessages, res.data.data.message] });
+        } catch (error) {
+          console.log('sendMessages error:', error);
+          toast.error(
+            error.response?.data?.message || "Failed to send message"
+          );
         } finally {
           set({ isMessagesLoading: false });
         }
